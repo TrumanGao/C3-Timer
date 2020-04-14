@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			/* 设置样式 */
+    #wrap {
+        width: 500px;
+        height: 280px;
+        margin: 50px auto;
+        /* border: 1px solid #CCC; */
+        position: relative;
+        /* pointer-events: none; */
+    }
+    
+    #prev:before,
+    #next:before,    
+    #prev:after,
+    #next:after{
+        display: block;
+        content: ""; 
+        transform: rotateZ(45deg);
+        z-index: -10;
+        position:absolute;
+        left:0;
+        right:0;
+        margin: auto;
+        border-radius: 10px 0;
+    }
+    #prev:before,
+    #next:before{
+        width:50px;
+        height:50px;
+        background: forestgreen;
+    }
+    #prev:after,
+    #next:after{
+        width:40px;
+        height:40px;
+        background: white;
+    }
+    #prev:before{
+        top:-25px;
+    }
+    #prev:after{
+        top:-15px;
+    }
+    #next:before{
+        bottom:-25px;
+    }
+    #next:after{
+        bottom:-15px;
+    }
+    #prev:hover:before,
+    #next:hover:before{
+        background: black;
+        cursor: pointer;
+    }
+    
+    #wrap ul{
+        /* 样式初始化 */
+        list-style: none;
+        padding: 0;
+        margin:0;
+        /* 设置样式 */
+        width: 100%;
+        height: 100%;
+        /* 清除换行空格，父级设置字体大小为0 */
+        font-size: 0px;
+    }
+
+    #wrap li{
+        width: 20%;
+        /* 高度为何无效？？？ */
+        height:100%;
+        position:relative;
+        display: inline-block;
+        /* line-height: 280px; */
+        /* float:left; */
+        transform-style: preserve-3d;
+        transition: all 1s;
+    }
+
+    #wrap li span{
+        display: block;
+        width:100%;
+        /* 高度为何无效？？？ */
+        height:100%;
+        /* 清除换行空格，子级设置实际字体大小 */
+        font-size: 50px;
+        text-align: center;
+        line-height: 280px;
+        position: absolute;
+        left:0;
+        top:0;
+        background-size: cover;
+    }
+    
+    li span{
+        background: no-repeat; 
+    }
+    
+    li span:first-child {
+        background-image: url(./img/1.jpg);
+        transform: translateZ(140px);
+    }
+    li span:nth-child(2){
+        background-image: url(./img/2.jpg);
+        transform: rotateX(90deg) translateZ(140px);
+    }
+    li span:nth-child(3){
+        background-image: url(./img/3.jpg);
+        transform: rotateX(180deg) translateZ(140px);
+    }
+    li span:last-child{
+        background-image: url(./img/4.jpg);
+        transform: rotateX(270deg) translateZ(140px);
+    }
+    
+    #list2 span{
+        background-position: -100px 0;
+    }
+    
+    #list3 span{
+        background-position: -200px 0;
+    }
+    
+    #list4 span{
+        background-position: -300px 0;
+    }
+
+    #list5 span{
+        background-position: -400px 0;
+    }
+    </style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="prev" class="btn"></div>
+			<div id="next" class="btn"></div>
+			<ul>
+				<li id="list1">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</li>
+				<li id="list2">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</li>
+				<li id="list3">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</li>
+				<li id="list4">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</li>
+				<li id="list5">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</li>
+			</ul>
+		</div>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+		<script type="text/javascript">
+			var count = 0;
+			// 获取上下按钮，注册点击事件
+			$("#prev").click(function() {
+				count--;
+				$('li').each(function(key, value) {
+					// each遍历，回调函数的参数是遍历的数组中每个li的下标key和值value
+					// console.log(key);
+					// console.log(value);
+					$(this).css({
+						"transform": "rotateX(" + 90 * count + "deg)",
+						"transition-delay": key * 0.2 + "s",
+					})
+				})
+			})
+
+			$("#next").click(function() {
+				count++;
+				$("li").each(function(key, value) {
+					$(this).css({
+						"transform": "rotateX(" + 90 * count + "deg)",
+						"transition-delay": key * 0.2 + "s",
+					})
+				})
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>360安全浏览器</title>
+	</head>
+	<style type="text/css">
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		#fullpage .section {
+			overflow: hidden;
+		}
+
+		.first {
+			background: rgb(13, 165, 214);
+			text-align: center;
+		}
+
+		.second {
+			background: rgb(42, 181, 97);
+		}
+
+		.third {
+			background: rgb(222, 137, 16);
+		}
+
+		.forth {
+			background: rgb(22, 186, 157);
+		}
+
+		.fifth {
+			background: rgb(13, 165, 214);
+		}
+
+		/* 注意：current类名作为每一屏的过渡动画名称，直接加在各屏section标签上 */
+
+		/* 第一屏 */
+		#logo {
+			margin: 80px auto 100px auto;
+		}
+
+		.first .textarea img {
+			margin: 0 30px;
+		}
+
+		.first.current .textarea img {
+			margin: 0 5px;
+			transition: all 2s;
+		}
+
+		#slogan {
+			margin: 60px auto;
+		}
+
+		/* 第二屏*/
+		.second {
+			padding: 0 50px;
+		}
+
+		.second>div {
+			display: flex;
+			/* 伸缩项垂直居中 */
+			align-items: center;
+			justify-content: space-around;
+		}
+
+		#shield {
+			width: 428px;
+		}
+
+		.second #shield img:nth-child(1) {
+			transform: translate(400px, -30px) rotate(34deg);
+		}
+
+		.second #shield img:nth-child(2) {
+			transform: translate(10px, 100px) rotate(45deg);
+		}
+
+		.second #shield img:nth-child(3) {
+			transform: translate(100px, 330px) rotate(100deg);
+		}
+
+		.second #shield img:nth-child(4) {
+			transform: translate(300px, 30px) rotate(95deg);
+		}
+
+		.second #shield img:nth-child(5) {
+			transform: translate(610px, 39px) rotate(34deg);
+		}
+
+		.second #shield img:nth-child(6) {
+			transform: translate(800px, 200px) rotate(65deg);
+		}
+
+		.second #shield img:nth-child(7) {
+			transform: translate(100px, -90px) rotate(15deg);
+		}
+
+		.second #shield img:nth-child(8) {
+			transform: translate(50px, -250px) rotate(73deg);
+		}
+
+		.second #shield img:nth-child(9) {
+			transform: translate(500px, -100px) rotate(35deg);
+		}
+
+		.second.current #shield img {
+			transform: translate(0, 0) rotate(0deg);
+			transition: 2s;
+		}
+	</style>
+	<body>
+		<div id="fullpage">
+			<!-- 第一屏 -->
+			<div class="section first">
+				<img id="logo" src="img/logo.png">
+				<div class="textarea">
+					<img src="img/text_1.png">
+					<img src="img/text_2.png">
+					<img src="img/text_3.png">
+					<img src="img/text_4.png">
+					<img src="img/text_5.png">
+					<img src="img/text_6.png">
+					<img src="img/text_7.png">
+					<img src="img/text_8.png">
+				</div>
+				<img id="slogan" src="img/info_1.png">
+			</div>
+			<!-- 第二屏 -->
+			<div class="section second">
+				<div id="shield">
+					<img src="img/shield_1.png">
+					<img src="img/shield_2.png">
+					<img src="img/shield_3.png">
+					<img src="img/shield_4.png">
+					<img src="img/shield_5.png">
+					<img src="img/shield_6.png">
+					<img src="img/shield_7.png">
+					<img src="img/shield_8.png">
+					<img src="img/shield_9.png">
+				</div>
+				<div class="info">
+					<img src="img/info_2.png">
+				</div>
+			</div>
+			<!-- 第三屏 -->
+			<div class="section third">
+				3
+			</div>
+			<!-- 第四屏 -->
+			<div class="section forth">
+				444
+			</div>
+			<!-- 第五屏 -->
+			<div class="section fifth">
+				555
+			</div>
+		</div>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+		<script src="./js/jquery.fullPage.min.js"></script>
+		<script>
+			$('#fullpage').fullpage({
+				// afterLoad: 滚动到某一屏后的回调函数，接收anchorLink和index两个参数，anchorLink是锚链接的名称，index是序号，从1开始计算
+				afterLoad: function(anchorLink, index) {
+
+					// 每次滚动，先清除所有屏的current类名
+					$(".section").removeClass("current");
+					// 第一屏
+					if (index == 1) {
+						// 注：必须调用setTimeout函数，否则若直接添加current类名，计算机来不及处理过渡动画
+						setTimeout(function() {
+							$(".first").addClass("current");
+						})
+					}
+					// 第二屏
+					if (index == 2) {
+						$(".second").addClass("current");
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

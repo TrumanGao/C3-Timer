@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>秒表</title>
+	</head>
+	<style type="text/css">
+		#clock {
+			width: 300px;
+			height: 300px;
+			border-radius: 50%;
+			border: 15px solid black;
+			position: relative;
+			margin: 30px auto;
+		}
+
+		#clock:before,
+		#clock:after {
+			content: "";
+			display: block;
+			border-radius: 50%;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+		}
+
+		/* 表心 */
+		#clock:before {
+			width: 20px;
+			height: 20px;
+			background: black;
+			z-index: 10;
+		}
+
+		/* 表遮罩层 */
+		#clock:after {
+			width: 215px;
+			height: 215px;
+			background: white;
+		}
+
+		/* 指针 */
+		.needle {
+			content: "";
+			display: block;
+			background: black;
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin: auto;
+			z-index: 10;
+			transform-origin: center bottom;
+		}
+
+		/* 定义动画 */
+		@keyframes move {
+			100% {
+				transform: rotateZ(360deg)
+			}
+		}
+
+		/* 注animation属性写在js文件里，由按钮点击事件触发 */
+		/* 秒针 */
+		#sec {
+			width: 2px;
+			height: 100px;
+			top: 50px;
+			/* animation: move 60s infinite linear ; */
+		}
+
+		/* 分针 */
+		#min {
+			width: 5px;
+			height: 90px;
+			top: 60px;
+			/* animation: move 3600s infinite linear; */
+		}
+
+		/* 时针 */
+
+		#hour {
+			width: 10px;
+			height: 65px;
+			border-radius: 5px 5px 0 0;
+			top: 85px;
+			/* animation: move 86400s infinite linear; */
+		}
+
+		/* 刻度 */
+		.line {
+			width: 2px;
+			height: 270px;
+			background: darkgray;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+		}
+
+		#line1 {
+			transform: rotateZ(30deg);
+		}
+
+		#line2 {
+			transform: rotateZ(60deg);
+		}
+
+		#line4 {
+			transform: rotateZ(120deg);
+		}
+
+		#line5 {
+			transform: rotateZ(150deg);
+		}
+
+		/* 数字 */
+		.num {
+			font-size: 40px;
+			font-family: "bodoni mt black";
+			position: absolute;
+			margin: auto;
+		}
+
+		#t12 {
+			width: 53px;
+			top: 5px;
+			left: 0;
+			right: 0;
+		}
+
+		#t3 {
+			height: 47px;
+			top: 0;
+			bottom: 0;
+			right: 10px;
+		}
+
+		#t6 {
+			width: 26.5px;
+			bottom: 5px;
+			left: 0;
+			right: 0;
+		}
+
+		#t9 {
+			height: 47px;
+			top: 0;
+			bottom: 0;
+			left: 10px;
+		}
+
+		/* 电子显示器 */
+		#timer {
+			width: 150px;
+			height: 60px;
+			margin: 0 auto;
+			font-size: 50px;
+			font-family: simhei;
+			color: white;
+			background: black;
+			text-align: center;
+			border-radius: 10px;
+			border: 5px solid grey;
+		}
+
+		/* 控制按钮 */
+		#control {
+			text-align: center;
+			margin-top: 20px;
+		}
+
+		#control button {
+			/* width:80px; */
+			font-size: 20px;
+			font-family: simhei;
+			padding: 5px 20px;
+			margin: 5px;
+			border: none;
+			border-radius: 5px;
+			background: skyblue;
+			color: white;
+		}
+
+		#control button:hover {
+			cursor: pointer;
+		}
+	</style>
+	<body>
+		<div id="clock">
+			<div id="line1" class="line"></div>
+			<div id="line2" class="line"></div>
+			<div id="line4" class="line"></div>
+			<div id="line5" class="line"></div>
+			<div id="t12" class="num">12</div>
+			<div id="t3" class="num">3</div>
+			<div id="t6" class="num">6</div>
+			<div id="t9" class="num">9</div>
+			<div id="circle"></div>
+			<div id="hour" class="needle"></div>
+			<div id="min" class="needle"></div>
+			<div id="sec" class="needle"></div>
+		</div>
+		<div id="timer">00:00</div>
+		<div id="control">
+			<button type="button" id="start">开始</button>
+			<button type="button" id="stop">结束</button>
+		</div>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+		<script type="text/javascript">
+			// 获取开始按钮
+			$("#start").click(function() {
+				// 切换类名current，用于控制计时开始/暂停按钮
+				$(".needle").toggleClass("current");
+				// 增加类名on，用于结束按钮有效/无效
+				$(this).addClass("on");
+
+				// 判读是否有current类名
+				if ($(".needle").hasClass("current")) {
+					// 秒针运动
+					$("#sec").css({
+						"animation": "move 60s infinite linear",
+					});
+					// 分针运动
+					$("#min").css({
+						"animation": "move 3600s infinite linear",
+					});
+					// 时针运动
+					$("#hour").css({
+						"animation": "move 86400s infinite linear",
+					});
+					$(this).text("暂停");
+				} else {
+					// 所有指针暂停
+					$(".needle").css({
+						"animation-play-state": "paused",
+					});
+					$(this).text("继续");
+				}
+			})
+
+			// 获取结束按钮
+			$("#stop").click(function() {
+				// 所有指针暂停
+				$(".needle").css({
+					"animation-play-state": "paused",
+				});
+
+				// 判断计时器是否启动，启动则结束按钮有效
+				if ($("#start").hasClass("on")) {
+					var flag = confirm("一寸光阴一寸金，确定要结束计时吗？")
+					if (flag == true) {
+						alert("我对你很失望");
+					} else {
+						alert("后悔已经晚了，没想到吧？");
+					}
+					// 清除动画
+					$(".needle").css({
+						"animation": "",
+					})
+					// 切换类名current
+					$(".needle").removeClass("current");
+					$("#start").text("开始");
+					$("#start").removeClass("on");
+				} else {
+					alert("还没开始呢，急什么")
+					$(this).attr("disabled", false);
+				}
+			})
+		</script>
+	</body>
+</html>
