@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>故障文字</title>
+	</head>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		#page {
+			background-color: #000000;
+			height: 100vh;
+			padding-top: 150px;
+			text-align: center;
+		}
+
+		.text {
+			color: #ffffff;
+			font-size: 50px;
+			line-height: 50px;
+			position: relative;
+			letter-spacing: 1rem;
+			animation: glitch0 1s infinite linear alternate;
+		}
+
+		/* 获取text标签中的‘data-text’属性，获取文字内容 */
+		/* clip-path 剪切蒙版，inste四个参数分别表示元素上右下左四个方向剪切尺寸 */
+		.text::before,
+		.text::after {
+			content: attr(data-text);
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			top: 0;
+		}
+
+		.text::before {
+			text-shadow: -4px 0 red;
+			left: -2px;
+			clip-path: inset(0 0 25px 0);
+			animation: glitch1 .5s infinite linear alternate-reverse;
+		}
+
+		.text::after {
+			text-shadow: 4px 0 blue;
+			left: 2px;
+			clip-path: inset(25px 0 0 0);
+			animation: glitch2 .5s infinite linear alternate-reverse;
+		}
+
+		@keyframes glitch0 {
+			0% {
+				font-weight: 400;
+			}
+			25% {
+				font-weight: 600;
+			}
+			50% {
+				font-weight: 400;
+			}
+			75% {
+				font-weight: 100;
+			}
+			100% {
+				font-weight: 400;
+			}
+		}
+
+		/* 用关键帧动画循环切换剪切蒙版第一和第三个参数 */
+		@keyframes glitch1 {
+			0% {
+				clip-path: inset(0 0 0 0);
+			}
+
+			20% {
+				clip-path: inset(20px 0 10px 0);
+			}
+
+			40% {
+				clip-path: inset(0 0 30px 0);
+			}
+
+			60% {
+				clip-path: inset(10px 0 0 0);
+			}
+
+			80% {
+				clip-path: inset(10px 0 20px 0);
+			}
+
+			100% {
+				clip-path: inset(0 0 10px 0);
+			}
+		}
+
+		@keyframes glitch2 {
+			0% {
+				clip-path: inset(0 0 0 0);
+			}
+
+			20% {
+				clip-path: inset(20px 0 10px 0);
+			}
+
+			40% {
+				clip-path: inset(0 0 20px 0);
+			}
+
+			60% {
+				clip-path: inset(10px 0 10px 0);
+			}
+
+			80% {
+				clip-path: inset(30px 0 10px 0);
+			}
+
+			100% {
+				clip-path: inset(20px 0 0 0);
+			}
+		}
+	</style>
+	<body>
+		<div id="page">
+			<div class="text" data-text="无止尘">无止尘</div>
+	</body>
+	</div>
+</html>

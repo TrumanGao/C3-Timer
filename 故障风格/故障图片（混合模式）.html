@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>故障图片（混合模式）</title>
+	</head>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		#page {
+			padding: 50px;
+			text-align: center;
+		}
+
+		.image-wrap {
+			display: flex;
+		}
+
+		.wrap1,
+		.wrap2 {
+			flex: 1;
+			height: 500px;
+			border: 1px solid #999999;
+			position: relative;
+		}
+
+		/* 图一：故障效果 */
+		.image1,
+		.image1::after {
+			width: 300px;
+			height: 450px;
+			position: absolute;
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+		}
+
+		/* background-blend-mode: lighten; 显示出背景色*/
+		.image1 {
+			left: 0;
+			background-image: url(glitch.jpg);
+			background-color: #0ff;
+			background-blend-mode: lighten;
+		}
+
+		.image1::after {
+			content: "";
+			left: 10px;
+			background-image: url(glitch.jpg);
+			background-color: #f00;
+			background-blend-mode: lighten;
+			mix-blend-mode: darken;
+		}
+
+		/* 图二：双重曝光 */
+		.image2 {
+			width: 300px;
+			height: 450px;
+			left: 10px;
+			background-size: 100% 100%;
+			background-image: url(glitch.jpg), url(glitch2.jpg);
+			/* 重叠曝光取亮色 */
+			background-blend-mode: lighten;
+			/* 重叠曝光取暗色 */
+			background-blend-mode: darken;
+		}
+	</style>
+	<body>
+		<div id="page">
+			<h4>混合模式：mix-blend-mode</h4>
+			<h4>背景的混合模式：background-blend-mode 属性定义了背景层的混合模式（图片与颜色）</h4>
+			<div class="image-wrap">
+				<div class="wrap1">
+					<div class="image1"></div>
+				</div>
+				<div class="wrap2">
+					<div class="image2"></div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				// mix-blend-mode 和 background-blend-mode 可取的值：
+				// mix-blend-mode: normal; // 正常
+				// mix-blend-mode: multiply; // 正片叠底
+				// mix-blend-mode: screen; // 滤色
+				// mix-blend-mode: overlay; // 叠加
+				// mix-blend-mode: darken; // 变暗
+				// mix-blend-mode: lighten; // 变亮
+				// mix-blend-mode: color - dodge; // 颜色减淡
+				// mix-blend-mode: color - burn; // 颜色加深
+				// mix-blend-mode: hard - light; // 强光
+				// mix-blend-mode: soft - light; // 柔光
+				// mix-blend-mode: difference; // 差值
+				// mix-blend-mode: exclusion; // 排除
+				// mix-blend-mode: hue; // 色相
+				// mix-blend-mode: saturation; // 饱和度
+				// mix-blend-mode: color; // 颜色
+				// mix-blend-mode: luminosity; // 亮
+				// mix-blend-mode: initial;
+				// mix-blend-mode: inherit;
+				// mix-blend-mode: unset;
+			</script>
+		</div>
+	</body>
+</html>
